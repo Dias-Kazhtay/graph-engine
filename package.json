@@ -25,7 +25,8 @@
     "lint": "ESLINT_USE_FLAT_CONFIG=true npx eslint . --report-unused-disable-directives --max-warnings 0 && stylelint '**/*.css' --max-warnings 0",
     "lint:fix": "eslint . -c js,jsx --fix && stylelint '**/*.css' --fix",
     "prettier": "prettier . --check --ignore-unknown",
-    "prettier:fix": "prettier . -w"
+    "prettier:fix": "prettier . -w",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -50,6 +51,7 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "globals": "^15.7.0",
     "prettier": "^3.3.2",
-    "typescript-eslint": "^7.14.1"
+    "typescript-eslint": "^7.14.1",
+    "husky": "^8.0.0"
   }
 }
