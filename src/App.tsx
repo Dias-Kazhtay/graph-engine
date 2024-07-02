@@ -1,5 +1,8 @@
+import { useState } from 'react';
+
 function App() {
-  return <div className="App">Graph engine start</div>;
+  const [label] = useState('Graph engine start');
+  return <div className="App">{label}</div>;
 }
 
 export default App;
