@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { Node } from './entities/Node';
 
 function App() {
-  const [label] = useState('Graph engine start');
-  return <div className="App">{label}</div>;
+  return <Node />;
 }
 
 export default App;
