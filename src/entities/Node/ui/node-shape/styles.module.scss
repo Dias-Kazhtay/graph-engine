@@ -3,4 +3,8 @@
   position: absolute;
   top: 0;
   left: 0;
+
+  &__selected {
+    border: 1px solid black;
+  }
 }

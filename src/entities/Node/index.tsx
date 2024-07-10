@@ -1,1 +1,1 @@
-export * from './ui/Node/Node';
+export * from './ui/node-shape/Node';

@@ -1,4 +1,5 @@
-import { Node } from './entities/Node';
+import { NodeShape } from './entities/Node';
+import { NodeTypesEnum } from './shared/constants';
 
 function App() {
   return (
@@ -10,9 +11,7 @@ function App() {
         overflow: 'hidden',
       }}
     >
-      <Node id="1" />
-      <Node id="2" />
-      <Node id="3" />
+      <NodeShape id="3" text="node" nodeType={NodeTypesEnum.Circle} />
     </div>
   );
 }
