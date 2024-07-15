@@ -1,9 +1,10 @@
 import useDragger from '../../lib/use-dragger';
 import styles from './styles.module.scss';
 import cn from 'classnames';
-import { Text } from '../text/Text';
-import { Circle } from '../circle';
+import { Circle } from '../circle/Circle';
 import { NodeTypesEnum } from '../../../../shared/constants';
+import { useEffect, useState } from 'react';
+import { Pointer } from '../pointer/Pointer';
 
 interface NodeProps {
   id: string;
@@ -12,23 +13,42 @@ interface NodeProps {
 }
 
 export const NodeShape = ({ id, text, nodeType }: NodeProps) => {
+  const [isSelected, setSelected] = useState<boolean>(false);
   useDragger({
     nodeId: id,
   });
 
-  const renderNodeType = () => {
+  const renderNodeType = (text: string) => {
     switch (nodeType) {
       case NodeTypesEnum.Circle:
-        return <Circle />;
+        return <Circle text={text} />;
       default:
-        return <Circle />;
+        return <Circle text={text} />;
     }
   };
 
+  useEffect(() => {
+    const blur = () => {
+      setSelected(false);
+    };
+    document.addEventListener('click', blur);
+
+    return () => {
+      document.removeEventListener('click', blur);
+    };
+  });
+
   return (
-    <svg id={id} className={cn(styles.Node)} width={100} height={100} fill="#CAE8FF">
-      {renderNodeType()}
-      {text && <Text text={text} />}
-    </svg>
+    <div
+      id={id}
+      className={cn(styles.Node, { [styles.Node__selected]: isSelected })}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelected((prev) => !prev);
+      }}
+    >
+      <Pointer left="-4px" isSelected={isSelected} />
+      {renderNodeType(text ?? '')}
+    </div>
   );
 };

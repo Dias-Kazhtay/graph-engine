@@ -12,6 +12,7 @@ function App() {
       }}
     >
       <NodeShape id="3" text="node" nodeType={NodeTypesEnum.Circle} />
+      <NodeShape id="4" text="node" nodeType={NodeTypesEnum.Circle} />
     </div>
   );
 }
