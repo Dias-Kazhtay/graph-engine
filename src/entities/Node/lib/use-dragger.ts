@@ -29,10 +29,13 @@ function useDragger({ nodeId }: UsePraggerProps) {
     if (!container) throw new Error('Target element must have a parent');
 
     const onMouseDown = (e: MouseEvent) => {
-      isClicked.current = true;
+      // @ts-ignore
+      if (!e.target.className.includes('Pointer')) {
+        isClicked.current = true;
 
-      coords.current.startX = e.clientX;
-      coords.current.startY = e.clientY;
+        coords.current.startX = e.clientX;
+        coords.current.startY = e.clientY;
+      }
     };
 
     const onMouseUp = () => {

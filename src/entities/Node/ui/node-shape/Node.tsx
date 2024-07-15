@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import cn from 'classnames';
 import { Circle } from '../circle/Circle';
 import { NodeTypesEnum } from '../../../../shared/constants';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Pointer } from '../pointer/Pointer';
 
 interface NodeProps {
@@ -27,23 +27,22 @@ export const NodeShape = ({ id, text, nodeType }: NodeProps) => {
     }
   };
 
-  useEffect(() => {
-    const blur = () => {
-      setSelected(false);
-    };
-    document.addEventListener('click', blur);
+  // useEffect(() => {
+  //   const blur = () => {
+  //     setSelected(false);
+  //   };
+  //   document.addEventListener('click', blur);
 
-    return () => {
-      document.removeEventListener('click', blur);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener('click', blur);
+  //   };
+  // });
 
   return (
     <div
       id={id}
       className={cn(styles.Node, { [styles.Node__selected]: isSelected })}
-      onClick={(e) => {
-        e.stopPropagation();
+      onClick={() => {
         setSelected((prev) => !prev);
       }}
     >
