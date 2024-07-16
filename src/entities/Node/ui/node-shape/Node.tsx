@@ -13,7 +13,7 @@ interface NodeProps {
 }
 
 export const NodeShape = ({ id, text, nodeType }: NodeProps) => {
-  const [isSelected, setSelected] = useState<boolean>(false);
+  const [, setSelected] = useState<boolean>(false);
   useDragger({
     nodeId: id,
   });
@@ -27,26 +27,18 @@ export const NodeShape = ({ id, text, nodeType }: NodeProps) => {
     }
   };
 
-  // useEffect(() => {
-  //   const blur = () => {
-  //     setSelected(false);
-  //   };
-  //   document.addEventListener('click', blur);
-
-  //   return () => {
-  //     document.removeEventListener('click', blur);
-  //   };
-  // });
-
   return (
     <div
       id={id}
-      className={cn(styles.Node, { [styles.Node__selected]: isSelected })}
+      className={cn(styles.Node)}
       onClick={() => {
         setSelected((prev) => !prev);
       }}
     >
-      <Pointer left="-4px" isSelected={isSelected} />
+      <Pointer nodeId={id} id="left" left="11px" />
+      <Pointer nodeId={id} id="right" right="11px" />
+      <Pointer nodeId={id} id="top" top="11px" />
+      <Pointer nodeId={id} id="bottom" bottom="11px" />
       {renderNodeType(text ?? '')}
     </div>
   );

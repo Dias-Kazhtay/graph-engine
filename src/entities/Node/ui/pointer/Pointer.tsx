@@ -1,79 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
+import { GraphContext } from '../../../../shared/context';
 
 interface PointerProps {
   left?: string;
   top?: string;
   bottom?: string;
   right?: string;
-  isSelected: boolean;
+  id: string;
+  nodeId: string;
 }
 
-export const Pointer = ({ left, right, top, bottom, isSelected }: PointerProps) => {
-  const [isMouseDown, setMouseDown] = useState<boolean>(false);
-  const edgeRef = useRef<HTMLDivElement | null>(null);
+export const Pointer = ({ left, right, top, bottom, id, nodeId }: PointerProps) => {
+  const context = useContext(GraphContext);
+  const [isMouseDown, setMouseDown] = useState(false);
+  const mouseDownHandler = () => {
+    setMouseDown(true);
+    console.log('down', id, nodeId);
+  };
 
   useEffect(() => {
-    const mousemove = (e: any) => {
-      if (isMouseDown && edgeRef.current) {
-        edgeRef.current.style.left = `${e.clientX - 500}px`;
-        edgeRef.current.style.top = `${e.clientY - 250}px`;
-      }
-    };
-
-    const mousedown = () => {
-      setMouseDown(false);
-    };
-
-    const mouseup = (e: any) => {
+    const onMove = () => {
       if (isMouseDown) {
-        console.log(123, e);
+        // console.log('moving', e.clientX, e.clientY);
       }
     };
-    document.addEventListener('mousemove', mousemove);
-    document.addEventListener('mousedown', mousedown);
-    document.addEventListener('mouseup', mouseup);
+
+    const omMouseUp = (e: any) => {
+      if (isMouseDown) {
+        console.log('up element', `from ${nodeId}-${id}`, `to ${e.target.id}`);
+        console.log('context', context);
+        setMouseDown(false);
+      }
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', omMouseUp);
 
     return () => {
-      document.removeEventListener('mousemove', mousemove);
-      document.removeEventListener('mousedown', mousedown);
-      document.removeEventListener('mouseup', mouseup);
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', omMouseUp);
     };
   });
-
   return (
     <>
-      {isSelected && (
-        <>
-          <div
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              setMouseDown(true);
-            }}
-            onMouseUp={(e) => {
-              e.stopPropagation();
-
-              setMouseDown(false);
-            }}
-            className={styles.Pointer}
-            style={{
-              left,
-              right,
-              top,
-              bottom,
-            }}
-          />
-        </>
-      )}
       <div
+        id={`${nodeId}-${id}`}
+        onMouseDown={mouseDownHandler}
+        className={styles.Pointer}
         style={{
-          width: '30px',
-          height: '30px',
-          background: 'red',
-          position: 'absolute',
+          left,
+          right,
+          top,
+          bottom,
         }}
-        ref={edgeRef}
-      ></div>
+      />
     </>
   );
 };
